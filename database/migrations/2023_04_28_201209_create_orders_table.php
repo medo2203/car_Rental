@@ -13,8 +13,21 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->integer('userId');
-            $table->integer('carId');
+            $table->foreignId('userId')
+                    ->constrained('users')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
+            $table->foreignId('carId')
+                    ->constrained('cars')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
+            $table->string('pick_up_location');
+            $table->date('pick_up_date');
+            $table->time('pick_up_time');
+            $table->string('drop_off_location');
+            $table->date('drop_off_date');
+            $table->time('drop_off_time');
+            $table->boolean('approved')->default(false);
             $table->timestamps();
         });
     }
@@ -26,4 +39,16 @@ return new class extends Migration
     {
         Schema::dropIfExists('orders');
     }
+
+    public function validateOrder($id)
+    {
+
+        $order = Order::findOrFail($id);
+        dd($order);
+        $order->validated = true;
+        $order->save();
+
+        return redirect()->route('Orders.show');
+    }
+
 };

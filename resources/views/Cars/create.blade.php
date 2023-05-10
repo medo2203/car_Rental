@@ -36,6 +36,7 @@
                         <option style='background-color:#008000;color:white' value="Green">Green</option>
                         <option style='background-color:#FFFF00'>Yellow</option>
                     </select>      
+                    {{-- <input type="color" name="" id=""> --}}
                     <select class="form-select mb-2" data-style="btn-primary" name="body_type" title="Select a car type">
                         <option value="sedan"><img src="/path/to/sedan.png"> Sedan</option>
                         <option value="suv"><img src="/path/to/suv.png"> SUV</option>

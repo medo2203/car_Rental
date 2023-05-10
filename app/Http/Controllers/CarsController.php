@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Car;
+use App\Models\User;
 
 class CarsController extends Controller
 {
@@ -13,7 +14,8 @@ class CarsController extends Controller
     public function index()
     {
         $cars = Car::all();
-        return view('Cars.index', compact('cars'));
+        $user = User::all();
+        return view('Cars.index', compact('cars','user'));
     }
 
     /**

@@ -15,9 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('fullName')->nullable();
+            $table->integer('age')->nullable();
+            $table->string('CIN')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->string('photo', 300)->default("/storage/images/no_image54564_09fkf.png");
             $table->timestamps();
         });
     }

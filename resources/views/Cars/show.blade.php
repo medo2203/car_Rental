@@ -16,24 +16,31 @@
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="orderForm" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="orderForm">Modal title</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="" method="post">
-                    <div class="modal-body">
-                        <div class="d-flex justify-content-center">
-                            <h3>Driver's details</h3>
-                        </div>
-                        <label for="driverAge">
+                <div class="modal-body">
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <h3>Driver's details</h3>
+                    </div>
+                    <form id="user-form" action="{{ route('Orders.store')}}" method="POST">
+                        @csrf
+                        <label for="driverName">
                             <strong>
                                 Driver's Full Name
                             </strong>
                         </label>
                         <div class="input-group">
-                            <input type="text" class="form-control mb-4" name="CNI" placeholder="Driver's CIN">
+                            <input type="text" class="form-control @error('fullname') is-invalid @enderror" value="{{ Auth::user()->fullName }}"
+                                name="fullName" placeholder="Driver's Full name"
+                                @if (isset(Auth::user()->fullName)) disabled @endif>
+                            @error('fullName')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                         <div class="d-flex justify-content-center">
                             <div class="col-6 m-1">
@@ -42,49 +49,12 @@
                                         Driver's age
                                     </strong>
                                 </label>
-                                <select name="Driver's age" class="form-select mb-2" id="driverAge">
-                                    <option value="">How old are you ?</option>
-                                    <option value="21">21</option>
-                                    <option value="22">22</option>
-                                    <option value="23">23</option>
-                                    <option value="24">24</option>
-                                    <option value="25">25</option>
-                                    <option value="26">26</option>
-                                    <option value="27">27</option>
-                                    <option value="28">28</option>
-                                    <option value="29">29</option>
-                                    <option value="30">30</option>
-                                    <option value="31">31</option>
-                                    <option value="32">32</option>
-                                    <option value="33">33</option>
-                                    <option value="34">34</option>
-                                    <option value="35">35</option>
-                                    <option value="36">36</option>
-                                    <option value="37">37</option>
-                                    <option value="38">38</option>
-                                    <option value="39">39</option>
-                                    <option value="40">40</option>
-                                    <option value="41">41</option>
-                                    <option value="42">42</option>
-                                    <option value="43">43</option>
-                                    <option value="44">44</option>
-                                    <option value="45">45</option>
-                                    <option value="46">46</option>
-                                    <option value="47">47</option>
-                                    <option value="48">48</option>
-                                    <option value="49">49</option>
-                                    <option value="50">50</option>
-                                    <option value="51">51</option>
-                                    <option value="52">52</option>
-                                    <option value="53">53</option>
-                                    <option value="54">54</option>
-                                    <option value="55">55</option>
-                                    <option value="56">56</option>
-                                    <option value="57">57</option>
-                                    <option value="58">58</option>
-                                    <option value="59">59</option>
-                                    <option value="60">60</option>
-                                    <option value="+60">+60</option>
+                                <select name="age" class="form-select mb-2" id="driverAge"
+                                    @if (isset(Auth::user()->age)) disabled @endif>
+                                    @for ($i = 18; $i <= 99; $i++)
+                                        <option value="{{ $i }}"
+                                            @if (Auth::user()->age == $i) selected @endif>{{ $i }}</option>
+                                    @endfor
                                 </select>
                             </div>
                             <div class="col-6 m-1">
@@ -94,17 +64,29 @@
                                     </strong>
                                 </label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control mb-4" name="CNI" placeholder="Driver's CIN">
+                                    <input type="text" class="form-control mb-4" name="CIN"
+                                        placeholder="Driver's CIN" value="{{ Auth::user()->CIN }}"
+                                        @if (isset(Auth::user()->CIN)) disabled @endif>
                                 </div>
                             </div>
                         </div>
+                    {{-- </form>
+                    <form id="order-form" action="{{ route('Orders.store') }}" method="POST">
+                        @csrf  --}}
+                        <input type="hidden" name="userId" value="{{ auth()->user()->id }}">
+                        <input type="hidden" name="carId" value="{{ $car->id }}">
                         <div class="d-flex justify-content-center">
                             <h3>Booking details</h3>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <h3>{{ $car->brand }}</h3>
+                            <h3>{{ $car->model }}</h3>
+                            <h3>{{ $car->price }}</h3>
                         </div>
                         <strong>
                             Pick-up location
                         </strong>
-                        <select name="pickPlace" class="form-select mb-2">
+                        <select name="pick_up_location" class="form-select mb-2 @error('pick_up_location') is-invalid @enderror">
                             <option value="">Select a city</option>
                             <option value="Agadir">Agadir</option>
                             <option value="Casablanca">Casablanca</option>
@@ -130,6 +112,11 @@
                             <option value="Tiznit">Tiznit</option>
                             <option value="Zagora">Zagora</option>
                         </select>
+                        @error('pick_up_location')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                         <label>
                             <strong>
                                 Pick-up Date
@@ -137,19 +124,29 @@
                         </label>
                         <div class="d-flex justify-content-center">
                             <div class="form-floating mb-2 col-6 m-1">
-                                <input type="date" class="form-control" id="myDateInput" name="pickDate">
+                                <input type="date" class="form-control @error('pick_up_date') is-invalid @enderror" id="myDateInput" name="pick_up_date">
                                 <label for="myDateInput">Date</label>
+                                @error('pick_up_date')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="form-floating col-6 m-1">
-                                <input type="time" class="form-control" id="myTimeInput" name="pickTime">
+                                <input type="time" class="form-control @error('pick_up_time') is-invalid @enderror" id="myTimeInput" name="pick_up_time">
                                 <label for="myTimeInput">Time</label>
+                                @error('pick_up_time')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                         <label for="dropPlace"></label>
-                            <strong>
-                                Drop-off location
-                            </strong>
-                        <select name="dropPlace" class="form-select" id="dropPlace">
+                        <strong>
+                            Drop-off location
+                        </strong>
+                        <select  name="drop_off_location" class="form-select @error('drop_off_location') is-invalid @enderror" id="dropPlace">
                             <option value="">Select a city</option>
                             <option value="Agadir">Agadir</option>
                             <option value="Casablanca">Casablanca</option>
@@ -175,6 +172,11 @@
                             <option value="Tiznit">Tiznit</option>
                             <option value="Zagora">Zagora</option>
                         </select>
+                        @error('drop_off_location')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                         <label>
                             <strong>
                                 Drop-off Date
@@ -182,23 +184,35 @@
                         </label>
                         <div class="d-flex justify-content-center">
                             <div class="form-floating col-6 m-1">
-                                <input type="date" class="form-control" id="dropDate" name="dropDate">
+                                <input type="date" class="form-control @error('drop_off_date') is-invalid @enderror" id="dropDate" name="drop_off_date">
                                 <label for="myDateInput">Date</label>
+                                @error('drop_off_date')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="form-floating col-6 m-1">
-                                <input type="time" class="form-control" id="dropTime" name="dropTime">
+                                <input type="time" class="form-control @error('drop_off_time') is-invalid @enderror" id="dropTime" name="drop_off_time">
                                 <label for="myTimeInput">Time</label>
+                                @error('drop_off_time')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Place order</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="submit-btn">Placeorder</button>
+                </div>
                 </form>
             </div>
         </div>
     </div>
+
+    
     <script>
         // Get the current date in the format yyyy-mm-dd
         const today = new Date().toISOString().substr(0, 10);
@@ -214,5 +228,11 @@
 
         // Set the input value to tomorrow's date
         document.getElementById("dropDate").value = tomorrowString;
+
+        // document.getElementById('submit-btn').addEventListener('click', function(event) {
+        //     event.preventDefault();
+        //     document.getElementById('user-form').submit();
+        //     document.getElementById('order-form').submit();
+        // });
     </script>
 @endsection
