@@ -17,14 +17,29 @@ class AdminOrdersController extends Controller
      */
     public function index()
     {
-        $orders = Order::where('approved', false)->get();
-        $users=DB::table('users')
-        ->join('orders', 'users.id', '=', 'orders.userId')
-        ->select('users.*','users.fullName')
-        ->where("users.id", '=','orders.userId' )
-        ->get();
-        return view('admin.Orders',compact("orders","users"));
+        $selectColumns = [
+            'orders.id',
+            'users.fullName',
+            'cars.brand',
+            'cars.model',
+            'orders.pick_up_location',
+            'orders.pick_up_date',
+            'orders.pick_up_time',
+            'orders.drop_off_location',
+            'orders.drop_off_date',
+            'orders.drop_off_time'
+        ];
+        
+        $orders = DB::table('orders')
+            ->join('users', 'users.id', '=', 'orders.userId')
+            ->join('cars', 'cars.id', '=', 'orders.carId')
+            ->select($selectColumns)
+            ->where('orders.approved', false)
+            ->get();
+
+        return view('admin.Orders', compact('orders'));
     }
+    
     
 
     /**
@@ -62,7 +77,7 @@ class AdminOrdersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update($id)
     {
         //
     }

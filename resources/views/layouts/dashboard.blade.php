@@ -27,27 +27,42 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <style>
-      .nav-link {
-        margin :10px; 
-      }
-      .nav-item{ 
-        border-radius:20px;
-      }
-      .nav-item:hover{
-        background-color: #0d6efd;
-      }
+        .nav-link {
+            margin: 10px;
+        }
+
+        .nav-item {
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-item:hover {
+            background-color: #0d6efd;
+        }
+
+        .nav-item:hover .notification-bubble {
+            background-color: #212529;
+        }
+
+        .notification-bubble {
+            background: #0d6efd;
+            height: 20px;
+            width: 20px;
+            text-align: center;
+            font-size: small;
+            border-radius: 50%;
+        }
     </style>
 </head>
 
 <body style="height: 100%">
     @yield('scripts')
     <div class="d-flex" style="width: 100%;height:100%">
-        <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 20%;height:100%">
+        <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 15%;height:100%">
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                <svg class="bi me-2" width="40" height="32">
-                    <use xlink:href="#bootstrap"></use>
-                </svg>
-                <span class="fs-5">Admin Control panel</span>
+                <span class="fs-6" style="text-align: center;">Admin Control panel</span>
             </a>
             <hr>
             <ul class="navbar-nav flex-column">
@@ -56,13 +71,14 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Orders</a>
+                    <span class="notification-bubble">@yield('ordersNotification')</span>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Users</a>
                 </li>
             </ul>
             <div class="dropdown position-absolute bottom-0 pb-4">
-              <hr style="width: 240px">
+                <hr style="width: 240px">
                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                     id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="https://github.com/mdo.png" alt="" width="32" height="32"

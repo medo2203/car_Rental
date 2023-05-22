@@ -5,7 +5,10 @@ use App\Http\Controllers\CarsController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminOrdersController;
+use App\Http\Controllers\AdminCarsController;
 use App\Http\Controllers\ValidateController;
+use App\Http\Controllers\ApproveController;
+use App\Http\Controllers\pdfController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,8 +36,13 @@ Route::resource('Cars', CarsController::class);
 Route::resource('Orders', OrdersController::class);
 // Route::post('')
 Route::resource('Dashboard', AdminOrdersController::class);
+Route::resource('tomobilat', AdminCarsController::class);
 Route::get('/validate/{id}' ,[ ValidateController::class,"validateOrder"]);
+Route::get('/approve/{id}' ,[ ApproveController::class,"approveOrder"]);
+
+Route::get('pdf/preview', [pdfController::class, 'preview'])->name('pdf.preview');
+Route::get('pdf/generate', [pdfController::class, 'generatePDF'])->name('pdf.generate');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -30,7 +30,7 @@
         <div class="navbare-container">
             <div class="nav-items">
                 <div class="nav-logo">
-                    Rent it
+                    <img src="images/logo.png" alt="">
                 </div>
                 <div class="nav-menu">
                     <a href="/"><li>Home</li></a>
@@ -49,11 +49,15 @@
                         <a href="{{ route('register') }}"><button id="register-button">{{ __('Register') }}</button></a>
                     @endif
                 @else
+                    <div class="d-flex justify-content-center align-items-center">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }}
                         </a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('logout') }}"
+                            <span>
+                                <img src="{{ asset(Auth::user()->photo)}}"  alt="profile" width="30px" style="border-radius: 50%;">
+                            </span>
+                        <div class="dropdown-menu dropdown-menu-center pl-0" style="width: 170px;" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item text-center m-0" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
@@ -61,14 +65,15 @@
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
-                            <a href="{{route('User.show', Auth::user()->id)}}" class="dropdown-item">Profile</a>
+                            <a href="{{route('User.show', Auth::user()->id)}}" class="dropdown-item text-center  m-0">Profile</a>
                         </div>
+                    </div>
                 @endguest
             </div>
         </div>
-        <main class="py-4">
+        <div class="main-container">
             @yield('content')
-        </main>
+        </div>
     </div>
 </body>
 </html>

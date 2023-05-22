@@ -64,7 +64,8 @@ class OrdersController extends Controller
             ->join('users', 'orders.userId', '=', 'users.id')
             ->join('cars', 'orders.carid', '=', 'cars.id')
             ->select('orders.*', 'cars.brand')
-            ->where('orders.approved', 0)
+            ->where('orders.approved', false)
+            ->where('orders.validated', false)
             ->get();
         return view('Orders.index', compact('orders'));
     }
@@ -111,22 +112,5 @@ class OrdersController extends Controller
         //
     }
 
-    // public function valider($id)
-    // {
-    //     $user = DB::table('orders')
-    //     ->select('userId')
-    //     ->where('orders.userId', $id)
-    //     ->get();
 
-    //     $orderToValide = DB::table('orders')
-    //     ->select('*')
-    //     ->where('orders.id', $id)
-    //     ->get();
-
-    //     $orderToValide->approved = 1;
-    //     $order->save();
-    //     dd($order);
-
-    //     return redirect()->route('Orders.show');
-    // }
 }
