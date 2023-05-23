@@ -39,7 +39,7 @@
                     <a href=""><li>About</li></a>
                 </div>
             </div>
-            <div class="nav-account">
+            <div class="{{ request()->is('/') ? 'home-colors' : 'nav-account' }}">
                 @guest
                     @if (Route::has('login'))
                         <a href="{{ route('login') }}"><button id="login-button">{{ __('Login') }}</button></a>

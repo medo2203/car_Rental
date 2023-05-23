@@ -11,7 +11,7 @@ body {
     overflow-x: hidden;
 }
 
-@media screen and (min-width: 1024px) and (max-width: 1550px) {
+@media screen and (min-width: 1024px){
     /* Your CSS rules for larger desktop screens and laptops */
 
     .navbare-container {
@@ -42,7 +42,7 @@ body {
 
 
     .nav-menu {
-        width: 40%;
+        width: 45%;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -68,13 +68,21 @@ body {
     /* .nav-menu li:hover {} */
 
     .nav-account {
-        width: 40%;
+        height: 100%;
+        width: 400px;
+        display: flex;
+        justify-content: center;
+        align-items: center ;
+    }
+
+    .home-colors{
+        height: 100%;
+        width: 600px;
         display: flex;
         justify-content: center;
         align-items: center ;
         background-color: #b8c9dd;
     }
-
     #login-button {
         border: none;
         outline: none;

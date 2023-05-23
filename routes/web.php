@@ -21,9 +21,9 @@ use App\Http\Controllers\pdfController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 // Route::get('/User/{userId}/order', [OrderController::class, 'showUserOrders'])->name('User.order');
 
