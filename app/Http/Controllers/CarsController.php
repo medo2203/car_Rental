@@ -31,36 +31,44 @@ class CarsController extends Controller
      */
     public function store(Request $request)
     {
-        $rules = [
+        $validatedData = $request->validate([
             'brand' => 'required',
             'model' => 'required|max:20',
-            'year' => 'required|lt:2023|gt:1886',
+            'year' => 'required|numeric|between:1886,2023',
             'color' => 'required',
             'body_type' => 'required',
             'fuel_type' => 'required',
             'transmission_type' => 'required',
-            'mileage' => 'required|gt:0',
-            'price' => 'required|gt:0',
-        ];
-
-        $validatedData = $request->validate($rules);
-
+            'mileage' => 'required|numeric|gt:0|lt:1000000',
+            'price' => 'required|numeric|gt:0|lt:10000',
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+    
         $car = new Car();
-        $car -> brand = $request -> input('brand');
-        $car -> model = $request -> input('model');
-        $car -> year = $request -> input('year');
-        $car -> color = $request -> input('color');
-        $car -> body_type = $request -> input('body_type');
-        $car -> fuel_type = $request -> input('fuel_type');
-        $car -> transmission_type = $request -> input('transmission_type');
-        $car -> mileage = $request -> input('mileage');
-        $car -> price = $request -> input('price');
-        
-        $car ->save();
-
+        $car->brand = $validatedData['brand'];
+        $car->model = $validatedData['model'];
+        $car->year = $validatedData['year'];
+        $car->color = $validatedData['color'];
+        $car->body_type = $validatedData['body_type'];
+        $car->fuel_type = $validatedData['fuel_type'];
+        $car->transmission_type = $validatedData['transmission_type'];
+        $car->mileage = $validatedData['mileage'];
+        $car->price = $validatedData['price'];
+    
+        if ($request->hasFile('photo')) {
+            $fileName = time() . $request->file('photo')->getClientOriginalName();
+            $path = $request->file('photo')->storeAs('cars', $fileName, 'public');
+            $car->photo = '/storage/' . $path;
+    
+            if ($car->photo !== null && file_exists(public_path($car->photo))) {
+                unlink(public_path($car->photo));
+            }
+        }
+    
+        $car->save();
+    
         return redirect()->route('Cars.index');
     }
-
     /**
      * Display the specified resource.
      */

@@ -1,27 +1,30 @@
 @extends('layouts.app')
 @section('cdns')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 @endsection
 @section('scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
 @endsection
 @section('content')
     <div class="d-flex justify-content-center">
         <div class="col-4 card" style="width:500px">
             <div class="card-header d-flex justify-content-center">
-                    <h1> Add a CAR </h1>
+                <h1> Add a CAR </h1>
             </div>
             <div class="card-body">
-                <form action="{{route('Cars.store')}}" method="post">
+                <form action="{{ route('Cars.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="input-group mb-2">
-                        <input type="text" name="brand" placeholder="Car's Brand" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        <input type="text" name="brand" placeholder="Car's Brand" class="form-control"
+                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                     </div>
                     <div class="input-group mb-2">
-                        <input type="text" name="model" placeholder="Car' Model" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        <input type="text" name="model" placeholder="Car' Model" class="form-control"
+                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                     </div>
                     <div class="input-group mb-2">
-                        <input type="number" name="year" placeholder="Car's Year" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        <input type="number" name="year" placeholder="Car's Year" class="form-control"
+                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                     </div>
                     <label for="color" style="display: inline-block;width:100px" class="mb-2">Car's color</label>
                     <select class="mb-2" title="Select a color" name="color" style="text-align: center">
@@ -35,7 +38,7 @@
                         <option style='background-color:#964B00;color:white' value="Brown">Brown</option>
                         <option style='background-color:#008000;color:white' value="Green">Green</option>
                         <option style='background-color:#FFFF00'>Yellow</option>
-                    </select>      
+                    </select>
                     {{-- <input type="color" name="" id=""> --}}
                     <select class="form-select mb-2" data-style="btn-primary" name="body_type" title="Select a car type">
                         <option value="sedan"><img src="/path/to/sedan.png"> Sedan</option>
@@ -47,24 +50,34 @@
                         <option value="convertible"><img src="/path/to/convertible.png"> Convertible</option>
                         <option value="minivan"><img src="/path/to/minivan.png"> Minivan</option>
                         <option value="crossover"><img src="/path/to/crossover.png"> Crossover</option>
-                    </select>                                         
+                    </select>
                     <select class="form-select mb-2" aria-label="Default select example" name="fuel_type">
                         <option value="">--Car's Fuel type--</option>
                         <option value="Gasoline">Gasoline</option>
                         <option value="Diesel Fuel">Diesel Fuel</option>
                     </select>
-                    <select class="form-select mb-2" name="transmission_type" aria-label="Default select example" >
+                    <select class="form-select mb-2" name="transmission_type" aria-label="Default select example">
                         <option value="">--Car's Transmission Type--</option>
                         <option value="Manual transmissions">Manual transmissions</option>
                         <option value="Automatic transmissions">Automatic transmissions</option>
                     </select>
                     <div class="input-group mb-2">
-                        <input type="text" placeholder="Car's Mileage" name="mileage" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        <input type="text" placeholder="Car's Mileage" name="mileage" class="form-control"
+                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                     </div>
                     <div class="input-group mb-2">
-                        <input type="text" placeholder="Car's Price" name="price" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        <input type="text" placeholder="Daily renting price" name="price" class="form-control"
+                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                     </div>
-                    <input type="file" name="" id="">
+                    <div class="input-group mb-2">
+                        <label for="photo" class="btn btn-primary">
+                            Upload car Image
+                            <input id="photo" class="@error('photo') is-invalid @enderror" type="file" name="photo" class="form-control-file" style="display: none">
+                        </label>
+                        @error('photo')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                     <div class="d-flex justify-content-center">
                         <button class="btn btn-primary" type="submit">Add car</button>
                     </div>
@@ -75,4 +88,14 @@
     @push('scripts')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
     @endpush
+    <script>
+        function updateLabelText(input) {
+            const label = document.getElementById('custom-file-input');
+            if (input.files.length > 0) {
+                label.textContent = input.files[0].name;
+            } else {
+                label.textContent = 'Choose a file';
+            }
+        }
+    </script>
 @endsection

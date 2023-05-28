@@ -9,9 +9,16 @@ class Car extends Model
 {
     use HasFactory;
 
-    public function orders()
-    {
-        return $this->hasMany(Order::class);
-    }
-
+    protected $fillable = [
+        'brand',
+        'model',
+        'year',
+        'color',
+        'body_type',
+        'fuel_type',
+        'transmission_type',
+        'mileage',
+        'price',
+        'photo'
+    ];
 }

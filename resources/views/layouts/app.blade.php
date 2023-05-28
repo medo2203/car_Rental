@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,22 +25,77 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
+
 <body>
     @yield('scripts')
-    <div id="app">       
+    <div id="app">
         <div class="navbare-container">
             <div class="nav-items">
                 <div class="nav-logo">
                     <img src="images/logo.png" alt="">
                 </div>
                 <div class="nav-menu">
-                    <a href="/"><li>Home</li></a>
-                    <a href="{{route('Cars.index')}}"><li>Cars</li></a>
-                    <a href=""><li>Contact</li></a>
-                    <a href=""><li>About</li></a>
+                    <a href="/">
+                        <li>Home</li>
+                    </a>
+                    <a href="{{ route('Cars.index') }}">
+                        <li>Cars</li>
+                    </a>
+                    <a href="">
+                        <li>Contact</li>
+                    </a>
+                    <a href="">
+                        <li>About</li>
+                    </a>
                 </div>
             </div>
             <div class="{{ request()->is('/') ? 'home-colors' : 'nav-account' }}">
+                <div class="toggled-bar" hidden>
+                    <div class="tglback">
+                        <a  href="javascript:void(0);" class="back" onclick="toggleToggledBar()">
+                            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                    <div class="bar">
+                        <div class="profile">
+                            @auth
+                                <div class="userIMG">
+                                    <img src="{{ asset(Auth::user()->photo) }}" alt="" width="50px"
+                                        height="50px">
+                                </div>
+                                <p class="username">
+                                    {{ Auth::user()->name }}
+                                </p>
+                            @endauth
+                        </div>
+                        <div class="bar-items">Home</div>
+                        <div class="bar-items">Reviews</div>
+                        <div class="bar-items">Contact</div>
+                        <div class="bar-items">About</div>
+                        @guest
+                            <a class="bar-items mt-3 mb-1" href="{{ route('login') }}">
+                                Log in
+                            </a>
+                            <a class="bar-items" href="{{ route('register') }}">
+                                Register
+                            </a>
+                        @else
+                            <a href="{{ route('User.show', Auth::user()->id) }}" class="bar-items mt-3 mb-1">Profile
+                            </a>
+                            <a class="bar-items mt-0" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        @endguest
+                    </div>
+                </div>
+                <a href="javascript:void(0);" class="icon" onclick="toggleToggledBar()">
+                    <i class="fa fa-bars"></i>
+                </a>
                 @guest
                     @if (Route::has('login'))
                         <a href="{{ route('login') }}"><button id="login-button">{{ __('Login') }}</button></a>
@@ -49,26 +105,33 @@
                         <a href="{{ route('register') }}"><button id="register-button">{{ __('Register') }}</button></a>
                     @endif
                 @else
-                    <div class="d-flex justify-content-center align-items-center">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->name }}
-                        </a>
-                            <span>
-                                <img src="{{ asset(Auth::user()->photo)}}"  alt="profile" width="30px" style="border-radius: 50%;">
-                            </span>
-                        <div class="dropdown-menu dropdown-menu-center pl-0" style="width: 170px;" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item text-center m-0" href="{{ route('logout') }}"
-                            onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+                    <div id="mini">
+                        <div class="d-flex justify-content-center align-items-center ">
+
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }}
                             </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                            <a href="{{route('User.show', Auth::user()->id)}}" class="dropdown-item text-center  m-0">Profile</a>
+                            <span>
+                                <img src="{{ asset(Auth::user()->photo) }}" alt="profile" width="30px"
+                                    style="border-radius: 50%;">
+                            </span>
+                            <div class="dropdown-menu dropdown-menu-center pl-0" style="width: 170px;"
+                                aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item text-center m-0" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                                <a href="{{ route('User.show', Auth::user()->id) }}"
+                                    class="dropdown-item text-center  m-0">Profile</a>
+                            </div>
                         </div>
-                    </div>
-                @endguest
+                    @endguest
+                </div>
             </div>
         </div>
         <div class="main-container">
@@ -76,39 +139,10 @@
         </div>
     </div>
 </body>
+<script>
+    function toggleToggledBar() {
+        const toggledBar = document.querySelector('.toggled-bar');
+        toggledBar.hidden = !toggledBar.hidden;
+    }
+</script>
 </html>
-
-
-
-<!-- Authentication Links -->
-{{-- @guest
-    @if (Route::has('login'))
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-        </li>
-    @endif
-
-    @if (Route::has('register'))
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-        </li>
-    @endif
-@else
-    <li class="nav-item dropdown">
-        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-            {{ Auth::user()->name }}
-        </a>
-
-        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{{ route('logout') }}"
-               onclick="event.preventDefault();
-                             document.getElementById('logout-form').submit();">
-                {{ __('Logout') }}
-            </a>
-
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                @csrf
-            </form>
-        </div>
-    </li>
-@endguest --}}

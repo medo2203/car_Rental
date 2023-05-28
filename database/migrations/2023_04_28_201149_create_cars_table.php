@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('transmission_type');
             $table->integer('mileage');
             $table->integer('price');
-            $table->string('image_path')->nullable();
+            $table->string('photo', 300)->default("/storage/cars/car54564_09fkf.png");
             $table->timestamps();
         });
     }

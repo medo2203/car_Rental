@@ -25,7 +25,7 @@
                     <div class="d-flex justify-content-center">
                         <h3>Driver's details</h3>
                     </div>
-                    <form id="user-form" action="{{ route('Orders.store')}}" method="POST">
+                    <form id="user-form" action="{{ route('Orders.store') }}" method="POST">
                         @csrf
                         <label for="driverName">
                             <strong>
@@ -33,8 +33,8 @@
                             </strong>
                         </label>
                         <div class="input-group">
-                            <input type="text" class="form-control @error('fullname') is-invalid @enderror" value="{{ Auth::user()->fullName }}"
-                                name="fullName" placeholder="Driver's Full name"
+                            <input type="text" class="form-control @error('fullname') is-invalid @enderror"
+                                value="{{ Auth::user()->fullName }}" name="fullName" placeholder="Driver's Full name"
                                 @if (isset(Auth::user()->fullName)) disabled @endif>
                             @error('fullName')
                                 <span class="invalid-feedback" role="alert">
@@ -70,7 +70,7 @@
                                 </div>
                             </div>
                         </div>
-                    {{-- </form>
+                        {{-- </form>
                     <form id="order-form" action="{{ route('Orders.store') }}" method="POST">
                         @csrf  --}}
                         <input type="hidden" name="userId" value="{{ auth()->user()->id }}">
@@ -81,12 +81,15 @@
                         <div class="d-flex justify-content-between">
                             <h3>{{ $car->brand }}</h3>
                             <h3>{{ $car->model }}</h3>
-                            <h3>{{ $car->price }}</h3>
+                            <h3 >{{ $car->price }}</h3>
+                            <input id="carPrice" type="text" value="{{ $car->price }}" hidden>
+                            <h3 id="price"></h3>
                         </div>
                         <strong>
                             Pick-up location
                         </strong>
-                        <select name="pick_up_location" class="form-select mb-2 @error('pick_up_location') is-invalid @enderror">
+                        <select name="pick_up_location"
+                            class="form-select mb-2 @error('pick_up_location') is-invalid @enderror">
                             <option value="">Select a city</option>
                             <option value="Agadir">Agadir</option>
                             <option value="Casablanca">Casablanca</option>
@@ -124,7 +127,8 @@
                         </label>
                         <div class="d-flex justify-content-center">
                             <div class="form-floating mb-2 col-6 m-1">
-                                <input type="date" class="form-control @error('pick_up_date') is-invalid @enderror" id="myDateInput" name="pick_up_date">
+                                <input type="date" class="form-control @error('pick_up_date') is-invalid @enderror"
+                                    id="myDateInput" name="pick_up_date" onchange="calculateDays()">
                                 <label for="myDateInput">Date</label>
                                 @error('pick_up_date')
                                     <span class="invalid-feedback" role="alert">
@@ -133,7 +137,8 @@
                                 @enderror
                             </div>
                             <div class="form-floating col-6 m-1">
-                                <input type="time" class="form-control @error('pick_up_time') is-invalid @enderror" id="myTimeInput" name="pick_up_time">
+                                <input type="time" class="form-control @error('pick_up_time') is-invalid @enderror"
+                                    id="myTimeInput" name="pick_up_time">
                                 <label for="myTimeInput">Time</label>
                                 @error('pick_up_time')
                                     <span class="invalid-feedback" role="alert">
@@ -146,7 +151,8 @@
                         <strong>
                             Drop-off location
                         </strong>
-                        <select  name="drop_off_location" class="form-select @error('drop_off_location') is-invalid @enderror" id="dropPlace">
+                        <select name="drop_off_location"
+                            class="form-select @error('drop_off_location') is-invalid @enderror" id="dropPlace">
                             <option value="">Select a city</option>
                             <option value="Agadir">Agadir</option>
                             <option value="Casablanca">Casablanca</option>
@@ -184,7 +190,8 @@
                         </label>
                         <div class="d-flex justify-content-center">
                             <div class="form-floating col-6 m-1">
-                                <input type="date" class="form-control @error('drop_off_date') is-invalid @enderror" id="dropDate" name="drop_off_date">
+                                <input type="date" class="form-control @error('drop_off_date') is-invalid @enderror"
+                                    id="DropDate" name="drop_off_date" onchange="calculateDays()">
                                 <label for="myDateInput">Date</label>
                                 @error('drop_off_date')
                                     <span class="invalid-feedback" role="alert">
@@ -193,7 +200,8 @@
                                 @enderror
                             </div>
                             <div class="form-floating col-6 m-1">
-                                <input type="time" class="form-control @error('drop_off_time') is-invalid @enderror" id="dropTime" name="drop_off_time">
+                                <input type="time" class="form-control @error('drop_off_time') is-invalid @enderror"
+                                    id="DropTime" name="drop_off_time">
                                 <label for="myTimeInput">Time</label>
                                 @error('drop_off_time')
                                     <span class="invalid-feedback" role="alert">
@@ -212,14 +220,14 @@
         </div>
     </div>
 
-    
+
     <script>
         // Get the current date in the format yyyy-mm-dd
         const today = new Date().toISOString().substr(0, 10);
         // Set the input value to today's date
         document.getElementById("myDateInput").value = today;
         document.getElementById("myTimeInput").value = "10:00";
-        document.getElementById("dropTime").value = "10:00";
+        document.getElementById("DropTime").value = "10:00";
 
         // Get tomorrow's date in the format yyyy-mm-dd
         const tomorrow = new Date();
@@ -227,12 +235,36 @@
         const tomorrowString = tomorrow.toISOString().substr(0, 10);
 
         // Set the input value to tomorrow's date
-        document.getElementById("dropDate").value = tomorrowString;
+        document.getElementById("DropDate").value = tomorrowString;
 
-        // document.getElementById('submit-btn').addEventListener('click', function(event) {
-        //     event.preventDefault();
-        //     document.getElementById('user-form').submit();
-        //     document.getElementById('order-form').submit();
-        // });
+        document.getElementById('submit-btn').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('user-form').submit();
+            document.getElementById('order-form').submit();
+        });
+
+        function calculateDays() {
+            var pickDate = document.getElementById('myDateInput').value;
+            var dropDate = document.getElementById('DropDate').value;
+            // console.log(startDate)
+            // console.log()
+
+
+            if (pickDate) {
+                var startDate = new Date(pickDate);
+                var endDate = new Date(dropDate);
+                let dayPrice = document.getElementById('carPrice').value;
+                var timeDiff = endDate.getTime() - startDate.getTime();
+                var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                totalPrice = Number(dayPrice)*Number(daysDiff)
+                document.getElementById("price").innerHTML = totalPrice;
+                console.log(dayPrice)
+                console.log(typeof timeDiff)
+                console.log(typeof totalPrice);
+
+            }
+
+            // if (totalDays)
+        }
     </script>
 @endsection
