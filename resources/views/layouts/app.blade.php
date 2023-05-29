@@ -25,7 +25,12 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
-
+<style>
+    .main-container{
+        width: 100%;
+        height: 100%;
+    }
+</style>
 <body>
     @yield('scripts')
     <div id="app">

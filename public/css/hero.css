@@ -44,6 +44,9 @@ body {
     .site{
         font:900 42px lato;
     }
+    .lktaba{
+        display:none ;
+    }
     .right-container {
         width: 600px;
         background-color: #b8c9dd;
@@ -87,8 +90,11 @@ body {
         margin: 20px;
         font-size:25px;
     }
-    h5{
+    .lktba{
         font-size:16px;
+    }
+    .lktaba{
+        display:none ;
     }
     .site{
         font:900 28px lato;
@@ -137,7 +143,7 @@ body {
         margin: 20px;
         font-size:25px;
     }
-    h5{
+    .lktba{
         font-size:16px;
     }
     .site{
@@ -161,18 +167,20 @@ body {
         display: flex;
         width: 100%;
         height: 1000px;
+        background-color: #ffffff;
+        background-image: -webkit-linear-gradient( -45deg, #b8c9dd 50%, #ffffff 50%);
     }
 
     .left-container {
         padding-top: 60px;
         width: 100%;
         display: flex;
-        align-items: start;
+        align-items: center;
     }
 
     .left-container .text {
-        width: 60%;
-        height: 80%;
+        width: 100%;
+        height: 80%;    
         margin: 25px;
         line-height: 80px;
 
@@ -181,18 +189,23 @@ body {
         margin-left: 30px;
     }
     .title{
+        width: 100%;
         margin: 20px;
-        font-size:25px;
+        font-size:20px;
     }
-    h5{
+    .lktba{
         font-size:16px;
+    }
+    .lktaba{
+        display:none ;
     }
     .site{
         font:900 28px lato;
     }
     .right-container {
-        width: 600px;
-        background-color: #b8c9dd;
+        width: 400px;
+        background-color: transparent;
+        padding-top: 100px;
     }
 
     .right-container #car1 {
@@ -200,6 +213,46 @@ body {
     }
     .right-container #car2 {
         display: block;
+    }
+
+}
+@media screen and (max-width: 720px) {
+    .main-container {
+        height: 1000px;
+        width: 100%;    
+        display: flex;
+        flex-direction: column;
+        justify-self: start;
+        align-items: center;
+        background-image: -webkit-linear-gradient( -90deg, #b8c9dd 40%, #ffffff 20%,#ffffff 20%,#ffffff 20%);
+    }
+    .left-container{
+        width: 100%;
+        height: 100px;
+    }
+    .left-container .text {
+        width: 70%;
+        height: 80%; 
+        line-height: 10px;
+
+    }
+    .lktba{
+        display:none ;
+    }
+    .lktaba{
+        display:inline ;
+    }
+    .right-container{
+        width: 50px;
+        height: 80%;
+    }
+    .right-container #car1 {
+        display: none;
+    }
+    .right-container #car2 {
+        display: inline;
+        margin-bottom: 100px;
+        height: 350px;
     }
 
 }

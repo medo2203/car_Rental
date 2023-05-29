@@ -1,0 +1,77 @@
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    background-color: white;
+}
+
+.main-container {
+    position: fixed;
+    display: flex;
+    width: 100%;
+    height: 100%px;
+    background-image: -webkit-linear-gradient( -68deg, #b8c9dd 40%, #ffffff 20%,#ffffff 20%,#ffffff 20%);
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.left{
+    width: 33%;
+    height: 95%;
+    background-color: red;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.left .top{
+    width: 216px;
+    height: 200px;
+    background-color: blue;
+    margin: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.left .types{
+    width: 100%;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.left .types .types-top{
+    width: 216px;
+    height: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.left .types .types-bottom{
+    width: 216px;
+    display: flex;
+    height: 75px;
+    justify-content: center;
+    align-items: center;
+}
+.left .type{
+    width: 50px;
+    background-color: aqua;
+    height: 35px;
+}
+.left .bottom{
+    width: 216px;
+    height: 400px;
+    background-color: blue;
+    margin: 20px;
+}
+.right{
+    width: 70%;
+    height: 95%;
+    background-color: green;
+}
