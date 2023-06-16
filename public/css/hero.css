@@ -224,7 +224,7 @@ body {
         flex-direction: column;
         justify-self: start;
         align-items: center;
-        background-image: -webkit-linear-gradient( -90deg, #b8c9dd 40%, #ffffff 20%,#ffffff 20%,#ffffff 20%);
+        background-image: -webkit-linear-gradient( -90deg, #ffffff 30%, #b8c9dd 30%,#b8c9dd 20%,#b8c9dd 20%);
     }
     .left-container{
         width: 100%;

@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Order;
+use App\Models\User;
+use App\Models\Car;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AdminUsersController extends Controller
 {
@@ -11,7 +16,9 @@ class AdminUsersController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+        $orders = Order::all();
+        return view('admin.users', compact('users','orders'));
     }
 
     /**

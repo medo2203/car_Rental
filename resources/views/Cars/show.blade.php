@@ -1,19 +1,29 @@
 @extends('layouts.app')
 @section('content')
-    <div class="d-flex justify-content-center">
-        <div class="card m-3 p-3">
-            <div class="card-img">{{ $car->brand }}</div>
-            <div class="card-body">
-                <h3>{{ $car->model }}</h3>
-                <h3>{{ $car->price }}</h3>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Order now
-                </button>
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="card">
+            <div class="row g-0">
+                <div class="col-lg-4 d-flex justify-content-center">
+                    <img src="{{ asset('storage/' . $car->photo ?? '') }}" class="img-fluid">
+                </div>
+                <div class="col-lg-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $car->brand }} {{ $car->model }}</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Year:</strong> {{ $car->year }}</li>
+                            <li class="list-group-item"><strong>Color:</strong> {{ $car->color }}</li>
+                            <li class="list-group-item"><strong>Body Type:</strong> {{ $car->body_type }}</li>
+                            <li class="list-group-item"><strong>Fuel Type:</strong> {{ $car->fuel_type }}</li>
+                            <li class="list-group-item"><strong>Transmission:</strong> {{ $car->transmission_type }}</li>
+                            <li class="list-group-item"><strong>Mileage:</strong> {{ $car->mileage }}</li>
+                            <li class="list-group-item"><strong>Price:</strong> ${{ $car->price }}</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-        </div>
+        </div>    
+        
     </div>
-
-
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="orderForm" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
@@ -70,9 +80,6 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- </form>
-                    <form id="order-form" action="{{ route('Orders.store') }}" method="POST">
-                        @csrf  --}}
                         <input type="hidden" name="userId" value="{{ auth()->user()->id }}">
                         <input type="hidden" name="carId" value="{{ $car->id }}">
                         <div class="d-flex justify-content-center">
@@ -263,8 +270,6 @@
                 console.log(typeof totalPrice);
 
             }
-
-            // if (totalDays)
         }
     </script>
 @endsection

@@ -411,10 +411,6 @@ body {
     #mini{
         display: none;
     }
-    .icon{
-        display: inline;
-        margin-left: 100px;
-    }
     .nav-account {
         display: none;
     }
@@ -430,11 +426,6 @@ body {
         font: 400 18px lato;
         text-decoration: none;
         color: black;
-    }
-    .icon{
-        margin-right: 100px;
-        font: 900 30px arial;
-        color: #7394bb;
     }
     .toggled-bar{
         display: flex;
@@ -500,19 +491,19 @@ body {
         color: white;
         border-radius: 20px;
     }
-    .home-colors{
-        width: 50%;
-        display: flex;
-        justify-content: end;
-        align-items: center;
-    }
     .nav-account{
         text-align: end;
     }
     .home-colors{
-        background-color: white;
-        text-align: end;
-        width: 50%;
+        /* background-color: red; */
+        display: flex;
+        justify-content: end;
+        width: 20%;
+    }
+    .home-colors .bars .icon{
+        color: #7394bb;
+        margin: 50px;
+
     }
     #login-button {
         display:none

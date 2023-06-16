@@ -12,7 +12,7 @@ body {
     display: flex;
     width: 100%;
     height: 100%px;
-    background-image: -webkit-linear-gradient( -68deg, #b8c9dd 40%, #ffffff 20%,#ffffff 20%,#ffffff 20%);
+    background-image: -webkit-linear-gradient( -69deg, #b8c9dd 40%, #ffffff 20%,#ffffff 20%,#ffffff 20%);
 }
 
 .container {
@@ -23,20 +23,22 @@ body {
     align-items: center;
 }
 .left{
-    width: 33%;
-    height: 95%;
-    background-color: red;
+    width: 25%;
+    height: 95%;;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 30px;
+    padding-right: 0;
 }
 .left .top{
-    width: 216px;
-    height: 200px;
-    background-color: blue;
+    width: 80%;
+    height: 150px;
     margin: 20px;
     display: flex;
     flex-wrap: wrap;
+    background-color: #dbdee2;
+    border-radius: 10px;
 }
 .left .types{
     width: 100%;
@@ -44,34 +46,77 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 .left .types .types-top{
-    width: 216px;
-    height: 75px;
+    width: 100%;
+    height: 40%;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0;
 }
 .left .types .types-bottom{
-    width: 216px;
+    width: 100%;
     display: flex;
-    height: 75px;
+    height:40%;
     justify-content: center;
     align-items: center;
+    margin: 0;
 }
 .left .type{
-    width: 50px;
-    background-color: aqua;
+    width: 25%;
     height: 35px;
+    margin: 3px;
+}
+.left .type img{
+    width:50px;
+    height: 40px;
+    margin: 3px;
 }
 .left .bottom{
-    width: 216px;
-    height: 400px;
-    background-color: blue;
+    width: 80%;
+    height: 300px;
     margin: 20px;
+    background-color: #dbdee2;
+    border-radius: 10px;
 }
 .right{
-    width: 70%;
+    width: 75%;
     height: 95%;
-    background-color: green;
+    display: flex;
+    justify-content: center;
+}
+.right .cars-container{
+    width: 100%;
+    height:600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+    padding: 50px;
+    padding-left: 0;
+}
+.right .cars-container .car-card{
+    width: 95%;
+    height: 170px;
+    margin: 15px;
+    display: flex;
+    background-color: #dbdee2;
+    border-radius: 10px;
+}
+.right .cars-container .car-card .img{
+    width: 30%;
+    height: 100%;
+}
+.right .cars-container .car-card .img img{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+.right .cars-container .car-card .info{
+    width:70%;
+    border-left: 2px solid rgba(27, 30, 34, 0.741);
+    height: 100%;
+    padding: 20px;
 }

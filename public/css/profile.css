@@ -1,0 +1,20 @@
+.gradient-custom {
+    /* fallback for old browsers */
+    background: #f6d365;
+
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right bottom,#275fb4, #0082c4, #00a1c7, #55bdc6, #95d6c9);
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right bottom, #275fb4, #0082c4, #00a1c7, #55bdc6, #95d6c9)
+}
+#edit_button{
+    text-decoration: none;
+    color: white;
+}
+#edit_button :hover{
+    text-shadow: 0px 0px 10px white;
+}
+#edit{
+    font-family:sans-serif;
+}

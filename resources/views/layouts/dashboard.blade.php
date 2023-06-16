@@ -17,10 +17,9 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    <link rel="stylesheet" href="css/navbare.css">
+    <link rel="stylesheet" href="{{asset('css/navbare.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 
 
@@ -58,23 +57,22 @@
 </head>
 
 <body style="height: 100%">
-    @yield('scripts')
     <div class="d-flex" style="width: 100%;height:100%">
-        <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 15%;height:100%">
-            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                <span class="fs-6" style="text-align: center;">Admin Control panel</span>
+        <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 200px;height:100%">
+            <a href="" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                <p class="text-center">Admin Control Panel</p>
             </a>
             <hr>
             <ul class="navbar-nav flex-column">
+                <a class="nav-link nav-item"href="{{ route('tomobilat.index') }}">
+                        Cars
+                </a>
+                <a class="nav-link nav-item" href="{{ route('Dashboard.index') }}">
+                    Orders
+                    <span class="notification-bubble m-2">@yield('ordersNotification')</span>
+                </a>
                 <li class="nav-item">
-                    <a class="nav-link " href="#">Cars</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Orders</a>
-                    <span class="notification-bubble">@yield('ordersNotification')</span>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Users</a>
+                    <a class="nav-link" href="{{route('users.index')}}">Users</a>
                 </li>
             </ul>
             <div class="dropdown position-absolute bottom-0 pb-4">

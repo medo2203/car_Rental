@@ -17,7 +17,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    <link rel="stylesheet" href="css/navbare.css">
+    <link rel="stylesheet" href="{{asset('css/navbare.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
@@ -30,31 +30,42 @@
         width: 100%;
         height: 100%;
     }
-</style>
+    </style>
 <body>
     @yield('scripts')
     <div id="app">
         <div class="navbare-container">
             <div class="nav-items">
                 <div class="nav-logo">
-                    <img src="images/logo.png" alt="">
+                    <img src="{{asset('images/logo.png')}}" alt="">
                 </div>
                 <div class="nav-menu">
                     <a href="/">
                         <li>Home</li>
                     </a>
-                    <a href="{{ route('Cars.index') }}">
+                    @auth
+                    <a href="{{route('Cars.index')}}">
                         <li>Cars</li>
                     </a>
-                    <a href="">
+                    @else
+                    <a href="/">
+                        <li>Review</li>
+                    </a>
+                    @endauth
+                    <a href="/">
                         <li>Contact</li>
                     </a>
-                    <a href="">
+                    <a href="/">
                         <li>About</li>
                     </a>
                 </div>
             </div>
             <div class="{{ request()->is('/') ? 'home-colors' : 'nav-account' }}">
+                <div class="bars">
+                    <a href="javascript:void(0);" class="icon" onclick="toggleToggledBar()">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                </div>
                 <div class="toggled-bar" hidden>
                     <div class="tglback">
                         <a  href="javascript:void(0);" class="back" onclick="toggleToggledBar()">
@@ -98,9 +109,6 @@
                         @endguest
                     </div>
                 </div>
-                <a href="javascript:void(0);" class="icon" onclick="toggleToggledBar()">
-                    <i class="fa fa-bars"></i>
-                </a>
                 @guest
                     @if (Route::has('login'))
                         <a href="{{ route('login') }}"><button id="login-button">{{ __('Login') }}</button></a>

@@ -17,30 +17,11 @@ class AdminCarsController extends Controller
      */
     public function index()
     {
-        $selectColumns = [
-            'orders.id',
-            'orders.carId',
-            'cars.brand',
-            'cars.model',
-            'orders.pick_up_location',
-            'orders.pick_up_date',
-            'orders.pick_up_time',
-            'orders.drop_off_location',
-            'orders.drop_off_date',
-            'orders.drop_off_time'
-        ];
-        
-        $cars = DB::table('cars')
-            ->join('orders', 'cars.id', '=', 'orders.carId')
-            ->select($selectColumns)
-            // ->where('orders.carId','=','')
-            ->get()
-            ->count();
-        // $lhsab = DB::table('orders')
-        //     ->
-    dd($cars);
+        $cars = Car::all();
+        $orders = Order::all();
+    // dd($cars);
 
-        return view('admin.Cars', compact('cars', 'lhsab'));
+        return view('admin.Cars', compact('cars','orders'));
     }
 
     /**

@@ -80,9 +80,9 @@ class UserController extends Controller
             if ($user->photo !== null && file_exists(public_path($user->photo))) {
                 unlink(public_path($user->photo));
             }
-        } else {
-            $requestData["photo"] = $user->photo;
-        }
+            } else {
+                $requestData["photo"] = $user->photo;
+            }
         $user->update($requestData);
         return redirect(route('User.show', $id))->with('flash_message', 'Member Updated!');
     }

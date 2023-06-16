@@ -63,9 +63,7 @@ class OrdersController extends Controller
         $orders = DB::table('orders')
             ->join('users', 'orders.userId', '=', 'users.id')
             ->join('cars', 'orders.carid', '=', 'cars.id')
-            ->select('orders.*', 'cars.brand')
-            ->where('orders.approved', false)
-            ->where('orders.validated', false)
+            ->select('orders.*','cars.brand','cars.model','cars.price','cars.photo')
             ->get();
         return view('Orders.index', compact('orders'));
     }
