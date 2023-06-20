@@ -42,9 +42,13 @@ Route::resource('users', AdminUsersController::class);
 Route::get('/validate/{id}' ,[ ValidateController::class,"validateOrder"])->name('Orders.validate');
 Route::get('/approve/{id}' ,[ ApproveController::class,"approveOrder"])->name('Orders.approve');
 
-Route::get('pdf/preview', [pdfController::class, 'preview'])->name('pdf.preview');
+// Route::get('/orders/{id}/pdf', [pdfController::class, 'pdf'])->name('Orders.pdf');
+
+Route::get('pdf/preview/{id}', [pdfController::class, 'preview'])->name('pdf.preview');
 Route::get('pdf/generate', [pdfController::class, 'generatePDF'])->name('pdf.generate');
+Route::get('/available/{id}', [CarsController::class, 'available'])->name('availability');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
+Route::get('/contact', [App\Http\Controllers\HomeController::class, 'contact']);
 
 //filtering
 Route::post('/cars', [CarsController::class, 'filterCars'])->name('Cars.filter');

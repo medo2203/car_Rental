@@ -68,13 +68,17 @@
                                                     <div class="mb-3">
                                                         <strong>Pick up</strong>
                                                         <br>
-                                                        <span id="myDateInput_{{ $order->id }}">{{ $order->pick_up_date }}</span> in
+                                                        <span
+                                                            id="myDateInput_{{ $order->id }}">{{ $order->pick_up_date }}</span>
+                                                        in
                                                         {{ $order->pick_up_location }}
                                                     </div>
                                                     <div class="mb-3">
                                                         <strong>Drop off</strong>
                                                         <br>
-                                                        <span id="DropDate_{{ $order->id }}">{{ $order->drop_off_date }}</span> in
+                                                        <span
+                                                            id="DropDate_{{ $order->id }}">{{ $order->drop_off_date }}</span>
+                                                        in
                                                         {{ $order->drop_off_location }}
                                                     </div>
                                                 </div>
@@ -104,12 +108,12 @@
                                                                 style="background-color: #f7f70ac3"></span>
                                                             Pending validation
                                                         @elseif ($order->approved)
-                                                        <span class="statusDot"
-                                                        style="background-color: #49d364"></span>
-                                                        Approved
+                                                            <span class="statusDot"
+                                                                style="background-color: #49d364"></span>
+                                                            Approved
                                                         @else
-                                                        <span class="statusDot"
-                                                        style="background-color: #006aff"></span>
+                                                            <span class="statusDot"
+                                                                style="background-color: #006aff"></span>
                                                             Pending approval
                                                         @endif
                                                     </span>
@@ -119,9 +123,9 @@
                                         </div>
                                         <div class="d-flex justify-content-center align-items-center">
                                             @if (!$order->validated)
-                                            <a href="{{ route('Orders.edit', $order->id) }}">
-                                                <button class="btn btn-warning btn-lg m-2 text-white">Edit
-                                                    Order</button>
+                                                <a href="{{ route('Orders.edit', $order->id) }}">
+                                                    <button class="btn btn-warning btn-lg m-2 text-white">Edit
+                                                        Order</button>
                                                 </a>
                                                 <button class="btn btn-danger m-2 btn-lg">
                                                     Delete Order
@@ -131,10 +135,15 @@
                                                         Validate Order
                                                     </button>
                                                 </a>
-                                                @elseif ($order->approved)
-                                                    We are honored to be a part of your journey.
+                                            @elseif ($order->approved)
+                                                We are honored to be a part of your journey.
+                                                <a onclick="printTargetPage({{$order->id}})">
                                                     <button class="btn btn-outline-success m-4">Download contrat</button>
-                                                @else
+                                                </a>
+                                                <a href="{{ route('pdf.preview', $order->id) }}">
+                                                    <button class="btn btn-outline-primary m-4">Preview contrat</button>
+                                                </a>
+                                            @else
                                                 <h4>Waiting for your order to be approved ...</h4>
                                             @endif
                                         </div>
@@ -151,13 +160,13 @@
     <script>
         window.onload = function() {
             var orderData = @json($orders);
-    
+
             orderData.forEach(function(order) {
                 var pickDate = document.getElementById('myDateInput_' + order.id).innerHTML;
                 var dropDate = document.getElementById('DropDate_' + order.id).innerHTML;
                 var startDate = new Date(pickDate);
                 var endDate = new Date(dropDate);
-                var dayPrice = document.getElementById('carPrice_'+ order.id).innerHTML;
+                var dayPrice = document.getElementById('carPrice_' + order.id).innerHTML;
                 var timeDiff = endDate.getTime() - startDate.getTime();
                 var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
                 document.getElementById("days_" + order.id).innerHTML = daysDiff;
@@ -165,6 +174,16 @@
                 document.getElementById("price_" + order.id).innerHTML = totalPrice;
             });
         };
+
+        function printTargetPage(id) {
+            console.log(id)
+            var targetPageUrl = 'http://127.0.0.1:8000/pdf/preview/'+id; // Replace with the URL of the target page
+            var targetWindow = window.open(targetPageUrl, '_blank');
+
+            targetWindow.onload = function() {
+                targetWindow.print();
+            };
+        }
     </script>
-    
+
 @endsection

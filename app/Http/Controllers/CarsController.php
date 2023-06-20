@@ -168,5 +168,20 @@ class CarsController extends Controller
     {
         return redirect()->route('Cars.index');
     }
+    public function available($id)
+    {
+        $car = Car::findOrFail($id);
+
+        if( $car->available){
+            $car->available = false;
+        }else{
+            $car->available = true;
+        }
+
+        $car->save();
+
+        return redirect()->back();
+    }
+
 
 }

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('mileage');
             $table->integer('price');
             $table->string('photo', 300)->default("/storage/cars/car54564_09fkf.png");
+            $table->boolean('available')->default(true);
             $table->timestamps();
         });
     }

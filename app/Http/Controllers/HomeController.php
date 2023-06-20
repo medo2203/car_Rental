@@ -25,4 +25,8 @@ class HomeController extends Controller
     {
         return view('/hero');
     }
+    public function contact()
+    {
+        return view('/contact');
+    }
 }

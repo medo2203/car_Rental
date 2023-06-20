@@ -20,6 +20,11 @@
                         </ul>
                     </div>
                 </div>
+                <div class="d-flex justify content-center col-lg-8">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Order now
+                    </button>
+                </div>
             </div>
         </div>    
         

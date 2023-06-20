@@ -10,6 +10,7 @@ html {
 body {
     min-height: 100%;
     background-color: white;
+    overflow: hidden;
 }
 
 @media screen and (min-width: 1300px) {
@@ -17,7 +18,8 @@ body {
     .main-container {
         display: flex;
         width: 100%;
-        height: 1000px;
+        height: 700px;
+        overflow-y: hidden;
     }
 
     .left-container {
@@ -67,6 +69,7 @@ body {
         display: flex;
         width: 100%;
         height: 1000px;
+        overflow-y: hidden;
     }
 
     .left-container {
@@ -218,7 +221,6 @@ body {
 }
 @media screen and (max-width: 720px) {
     .main-container {
-        height: 1000px;
         width: 100%;    
         display: flex;
         flex-direction: column;
