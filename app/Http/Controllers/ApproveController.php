@@ -17,7 +17,7 @@ class ApproveController extends Controller
     {
         $orderToApprove = Order::findOrFail($id);
 
-        $orderToApprove->approved = true;
+        $orderToApprove->approval_status = 'approved';
         $orderToApprove->save();
         
         
@@ -26,5 +26,14 @@ class ApproveController extends Controller
         $history->save();
         
         return redirect()->back();
-    } 
+    }
+    public function rejectOrder($id)
+    {
+        $orderToApprove = Order::findOrFail($id);
+
+        $orderToApprove->approval_status = 'rejected';
+        $orderToApprove->save();
+           
+        return redirect()->back();
+    }
 }

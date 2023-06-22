@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('drop_off_location');
             $table->date('drop_off_date');
             $table->time('drop_off_time');
-            $table->boolean('approved')->default(false);
+            $table->string('approval_status')->default('pending');
             $table->timestamps();
         });
     }

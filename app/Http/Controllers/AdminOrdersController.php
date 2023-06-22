@@ -20,6 +20,7 @@ class AdminOrdersController extends Controller
         $selectColumns = [
             'orders.id',
             'users.fullName',
+            'users.name',
             'cars.brand',
             'cars.model',
             'orders.pick_up_location',
@@ -34,7 +35,8 @@ class AdminOrdersController extends Controller
             ->join('users', 'users.id', '=', 'orders.userId')
             ->join('cars', 'cars.id', '=', 'orders.carId')
             ->select($selectColumns)
-            ->where('orders.approved', false)
+            ->where('orders.approval_status', 'pending')
+            ->where('orders.validated', true)
             ->get();
 
         return view('admin.Orders', compact('orders'));

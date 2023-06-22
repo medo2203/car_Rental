@@ -107,10 +107,14 @@
                                                             <span class="statusDot"
                                                                 style="background-color: #f7f70ac3"></span>
                                                             Pending validation
-                                                        @elseif ($order->approved)
+                                                        @elseif ($order->approval_status == 'approved')
                                                             <span class="statusDot"
                                                                 style="background-color: #49d364"></span>
                                                             Approved
+                                                        @elseif ($order->approval_status == 'rejected')
+                                                            <span class="statusDot"
+                                                                style="background-color: #ff2727"></span>
+                                                            Rejected
                                                         @else
                                                             <span class="statusDot"
                                                                 style="background-color: #006aff"></span>
@@ -135,14 +139,20 @@
                                                         Validate Order
                                                     </button>
                                                 </a>
-                                            @elseif ($order->approved)
+                                                @elseif ($order->approval_status == 'approved')
                                                 We are honored to be a part of your journey.
-                                                <a onclick="printTargetPage({{$order->id}})">
+                                                <a onclick="printTargetPage({{ $order->id }})">
                                                     <button class="btn btn-outline-success m-4">Download contrat</button>
                                                 </a>
-                                                <a href="{{ route('pdf.preview', $order->id) }}">
-                                                    <button class="btn btn-outline-primary m-4">Preview contrat</button>
-                                                </a>
+                                                @elseif ($order->approval_status == 'rejected')
+                                                Your order has been rejected by the admin
+                                                <button type="button" class="btn btn-outline-primary ms-4"
+                                                data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                Show details
+                                            </button>
+                                            <button class="btn btn-danger ms-2">
+                                                Delete Order
+                                            </button>
                                             @else
                                                 <h4>Waiting for your order to be approved ...</h4>
                                             @endif
@@ -156,7 +166,52 @@
             </div>
         </div>
     </div>
+
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="orderForm" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="d-flex justify-content-start text-bold">
+                        <h5>Order Rejection Details</h5>
+                    </div>
+                    <div class="d-flex justify-content-center text-bold">
+                        <p><span class="ms-4"> Dear {{ Auth::user()->fullName ?? Auth::user()->name }},</span><br>
+                            <br>
+                            <span class="ms-4"></span> We regret to inform you that your order has been rejected by our
+                            admin. We apologize for any
+                            inconvenience this may have caused.
+
+                            Possible reasons for rejection could include unavailability of the requested car, conflicting
+                            scheduling, or other unforeseen circumstances.
+
+                            Please feel free to make the necessary changes to your order or contact our support team for
+                            further assistance. We appreciate your understanding.
+
+                            Best regards,<br>
+                            <br>
+                            Auto Maroc"
+                        </p>
+
+                    </div>
+                    <div class="modal-footer">
+                        <a href="/contact">
+                            <div class="d-flex justify-content-end text-bold">
+                                <button class="btn btn-primary">Contact support</button>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{-- ................................................. --}}
     <script>
         window.onload = function() {
             var orderData = @json($orders);
@@ -177,7 +232,7 @@
 
         function printTargetPage(id) {
             console.log(id)
-            var targetPageUrl = 'http://127.0.0.1:8000/pdf/preview/'+id; // Replace with the URL of the target page
+            var targetPageUrl = 'http://127.0.0.1:8000/pdf/preview/' + id; // Replace with the URL of the target page
             var targetWindow = window.open(targetPageUrl, '_blank');
 
             targetWindow.onload = function() {

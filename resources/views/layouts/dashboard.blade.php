@@ -17,7 +17,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('css/navbare.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/navbare.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
@@ -65,14 +65,14 @@
             <hr>
             <ul class="navbar-nav flex-column">
                 <a class="nav-link nav-item"href="{{ route('tomobilat.index') }}">
-                        Cars
+                    Cars
                 </a>
                 <a class="nav-link nav-item" href="{{ route('Dashboard.index') }}">
                     Orders
                     <span class="notification-bubble m-2">@yield('ordersNotification')</span>
                 </a>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('users.index')}}">Users</a>
+                    <a class="nav-link" href="{{ route('users.index') }}">Users</a>
                 </li>
             </ul>
             <div class="dropdown position-absolute bottom-0 pb-4">
@@ -84,13 +84,16 @@
                     <strong>mdo</strong>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                    <li><a class="dropdown-item" href="#">New project...</a></li>
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
+                    <li><a class="dropdown-item" href="{{ route('User.show', Auth::user()->id) }}">Profile</a></li>
+                    <li><a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                        </a>
                     </li>
-                    <li><a class="dropdown-item" href="#">Sign out</a></li>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
                 </ul>
             </div>
         </div>

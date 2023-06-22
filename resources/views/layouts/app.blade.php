@@ -17,10 +17,10 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('css/navbare.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/navbare.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
 
 
@@ -28,31 +28,32 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <style>
-    .main-container{
+    .main-container {
         width: 100%;
         height: 100%;
     }
-    </style>
+</style>
+
 <body>
     @yield('scripts')
     <div id="app">
         <div class="navbare-container">
             <div class="nav-items">
                 <div class="nav-logo">
-                    <img src="{{asset('images/logo.png')}}" alt="">
+                    <img src="{{ asset('images/logo.png') }}" alt="">
                 </div>
                 <div class="nav-menu">
                     <a href="/">
                         <li>Home</li>
                     </a>
                     @auth
-                    <a href="{{route('Cars.index')}}">
-                        <li>Cars</li>
-                    </a>
+                        <a href="{{ route('Cars.index') }}">
+                            <li>Cars</li>
+                        </a>
                     @else
-                    <a href="/">
-                        <li>Review</li>
-                    </a>
+                        <a href="/">
+                            <li>Review</li>
+                        </a>
                     @endauth
                     <a href="/">
                         <li>Contact</li>
@@ -70,7 +71,7 @@
                 </div>
                 <div class="toggled-bar" hidden>
                     <div class="tglback">
-                        <a  href="javascript:void(0);" class="back" onclick="toggleToggledBar()">
+                        <a href="javascript:void(0);" class="back" onclick="toggleToggledBar()">
                             <i class="fa fa-arrow-left" aria-hidden="true"></i>
                         </a>
                     </div>
@@ -86,10 +87,20 @@
                                 </p>
                             @endauth
                         </div>
-                        <div class="bar-items">Home</div>
-                        <div class="bar-items">Reviews</div>
-                        <div class="bar-items">Contact</div>
-                        <div class="bar-items">About</div>
+                        <a href="/">
+                            <div class="bar-items">Home</div>
+                        </a>
+                        <a href="/reviews">
+                            <div class="bar-items">Reviews</div>
+                        </a>
+                        <a href="/contact">
+                            <div class="bar-items">Contact</div>
+                        </a>
+                        <div class="bar-items">
+                            <a href="{{route('about')}}">
+                                About
+                            </a>
+                        </div>
                         @guest
                             <a class="bar-items mt-3 mb-1" href="{{ route('login') }}">
                                 Log in
@@ -160,4 +171,5 @@
         toggledBar.hidden = !toggledBar.hidden;
     }
 </script>
+
 </html>
